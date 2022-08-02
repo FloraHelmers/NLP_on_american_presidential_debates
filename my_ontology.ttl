@@ -1,0 +1,142 @@
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix deb: <http://myURI.flora>.
+
+<http://myURI.flora#Debate>
+    a owl:Class ;
+    dc11:description "a serious discussion between several people, where arguments are exchanged" .
+
+<http://myURI.flora#transcript>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#Debate> ;
+    rdfs:range rdf:Ressource ; 
+    dc11:description "Link to the official transcript of the debate." . 
+
+<http://myURI.flora#Speech>
+    a owl:Class ; 
+    dc11:description "A text said  by only one actor".
+
+<http://myURI.flora#fullText>
+    a owl:ObjectProperty ; #datatypeproperty
+    rdfs:domain <http://myURI.flora#Speech> ; 
+    rdfs:range rdfs:Literal ;
+    dc11:description "gives access to the full text of the speech".
+
+<http://myURI.flora#saidBy>
+    a owl:ObjectProperty; #pas de trucs plus précis ? 
+    rdfs:domain <Speech>;
+    rdfs:range <Participant>;
+    dc11:description "said by".
+
+<http://myURI.flora#says>
+    a owl:ObjectProperty; #pas de trucs plus précis ? 
+    rdfs:domain <http://myURI.flora#Participant>;
+    rdfs:range <http://myURI.flora#Speech>;
+    dc11:description "says".
+
+<http://myURI.flora#during>
+    a owl:ObjectProperty ; 
+    rdfs:domain <http://myURI.flora#Speech>;
+    rdfs:range <http://myURI.flora#Debate>;
+    dc11:description "associates the speech and the debate during which the speech was said".
+
+<http://myURI.flora#before>
+    a owl:ObjectProperty ; 
+    rdfs:domain <http://myURI.flora#Speech> ; 
+    rdfs:range <http://myURI.flora#Speech> ; 
+    dc11:description "helps to find the temporal order of the speeches".
+
+<http://myURI.flora#after>
+    a owl:ObjectProperty ; 
+    rdfs:domain <http://myURI.flora#Speech> ; 
+    rdfs:range <http://myURI.flora#Speech> ; 
+    dc11:description "helps to find the temporal order of the speeches".
+
+
+<http://myURI.flora#ArgumentComponent>
+    a owl:Class ; 
+    dc11:description "Argumentative Component".
+
+<http://myURI.flora#argumentType>
+    a owl:ObjectProperty;
+    rdfs:domain <http://myURI.flora#ArgumentComponent> ;
+    rdfs:range rdfs:Litteral ; #a préciser
+    dc11:description "either Premise or Claim".
+
+<http://myURI.flora#textPositionBegin>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#ArgumentComponent> ;
+    rdfs:range rdfs:Litteral ; #un int pour être exact
+    dc11:description "situates the first caracter of the argument component in the text of the speech. The offset in the speech is set at zero".
+
+<http://myURI.flora#textPositionEnd>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#ArgumentComponent> ;
+    rdfs:range rdfs:Litteral ; #un int pour être exact
+    dc11:description "situates the last caracter of the argument component in the text of the speech. The offset in the speech is set at zero".
+
+<http://myURI.flora#attacks>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#ArgumentComponent>;
+    rdfs:range <http://myURI.flora#ArgumentComponent>;
+    dc11:description "attacks".
+
+
+<http://myURI.flora#supports>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#ArgumentComponent>;
+    rdfs:range <http://myURI.flora#ArgumentComponent>;
+    dc11:description "supports".
+
+
+<http://myURI.flora#equivalentTo>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#ArgumentComponent>;
+    rdfs:range <http://myURI.flora#ArgumentComponent>;
+    dc11:description "is equivalent to".
+
+<http://myURI.flora#Participant>
+    a owl:Class;
+    owl:subClassOf foaf:Person ;
+    # here the description the most adapted seems to be enumeration
+    dc11:description "A person actually being part of the debate, this character is temporally anchored into the debate (Obama 2008 and Obama 2012 are not the same)" .
+
+<http://myURI.flora#textIdentifier>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#Participant>;
+    rdfs:range rdfs:Literal ; 
+    dc11:description "How the Participant is identified in the transcript of the debate" .
+
+<http://myURI.flora#Journalist>
+    a owl:Class ;
+    rdfs:subClassOf: <Participant> ; 
+    owl:disjointWith <PCandidate> .
+
+<http://myURI.flora#PCandidate>
+    a owl:Class ;
+    rdfs:subClassOf: <Participant> ;
+    owl:disjointWith <Journalist>.
+
+<http://myURI.flora#VCandidate>
+    a owl:Class;
+    rdfs:subClassOf: <Participant>;
+    owl:disjointWith <Journalist>.
+
+<http://myURI.flora#party>
+    a owl:ObjectProperty ; 
+    rdfs:domain <http://myURI.flora#Participant>; #non c'est l'union de PCandidate et VCandidate
+    rdfs:range "Republican", "Democratic".
+
+<http://myURI.flora#participatesIn>
+    a owl:ObjectProperty ;
+    rdfs:domain <http://myURI.flora#Participant> ;
+    rdfs:range <http://myURI.flora#Debate>.
+
+<http://myURI.flora>
+    a owl:Ontology ;
+    dc11:title "Debates and argumentation";
+    dc11:description "an onthology to describe the use of arguments during the American presidential debates since 1960" ;
+    dc11:creator "Flora Helmers <flora.helmers@ens-lyon.fr>" ;
+    dc11:subject "Argumentation", "Debates"; 
+    owl:versionInfo "1.1" . 
